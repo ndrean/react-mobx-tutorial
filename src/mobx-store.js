@@ -1,7 +1,6 @@
-import { observer } from "mobx-react-lite";
 import { observable, action } from "mobx";
 
-const list = observable({
+const store = observable({
   todos: [],
   get unfinished() {
     return this.todos.filter((todo) => todo.finished === false).length;
@@ -9,10 +8,14 @@ const list = observable({
   addTodo: action(function (todo) {
     return this.todos.push(todo);
   }),
+  toggle: action((todoid) => {
+    const id = store.todos.findIndex((t) => t.id === todoid);
+    return (store.todos[id].finished = !store.todos[id].finished);
+  }),
 });
 
-list.addTodo({ id: Math.random(), title: "first", finished: false });
-list.addTodo({ id: Math.random(), title: "Second", finished: true });
-list.addTodo({ id: Math.random(), title: "Third", finished: true });
+store.addTodo({ id: Math.random(), title: "first", finished: false });
+store.addTodo({ id: Math.random(), title: "Second", finished: true });
+store.addTodo({ id: Math.random(), title: "Third", finished: true });
 
-export default list;
+export default store;
