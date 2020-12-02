@@ -1,12 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import "./index.css";
-
-const initList = [
-  { id: Math.random(), title: "first", finished: false },
-  { id: Math.random(), title: "Second", finished: true },
-  { id: Math.random(), title: "Third", finished: true },
-];
+import initList from "./pl-store.js";
 
 const TodoView = ({ todo, onhandleToggle }) => {
   const mystyle = clsx({
