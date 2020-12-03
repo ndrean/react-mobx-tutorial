@@ -5,9 +5,7 @@ const store = observable({
   get unfinished() {
     return this.todos.filter((todo) => todo.finished === false).length;
   },
-  addTodo: action(function (todo) {
-    return this.todos.push(todo);
-  }),
+  addTodo: action((todo) => store.todos.push(todo)),
   toggle: action((todoid) => {
     const id = store.todos.findIndex((t) => t.id === todoid);
     return (store.todos[id].finished = !store.todos[id].finished);

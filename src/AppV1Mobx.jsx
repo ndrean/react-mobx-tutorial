@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-// import { enableLogging } from "mobx-logger";
+import { action } from "mobx";
 import { configure } from "mobx";
 import store from "./mobx-store.js";
 import clsx from "clsx";
@@ -10,23 +10,23 @@ configure({
   enforceActions: "always",
   computedRequiresReaction: true,
   reactionRequiresObservable: true,
-  observableRequiresReaction: false,
+  observableRequiresReaction: true,
   disableErrorBoundaries: true,
 });
 
-const NewTodo = () => {
+const NewTodo = ({ todoList }) => {
   const [newTitle, setNewTitle] = React.useState("");
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={action((e) => {
         e.preventDefault();
-        store.addTodo({
+        todoList.addTodo({
           title: newTitle,
           id: Math.random(),
           finished: false,
         });
         setNewTitle("");
-      }}
+      })}
     >
       <input
         type="text"
@@ -38,12 +38,11 @@ const NewTodo = () => {
   );
 };
 
-const TodoView = observer(({ todo }) => {
+const TodoView = observer(({ todoList, todo }) => {
   const mystyle = clsx({
     ischecked: todo.finished,
     notchecked: !todo.finished,
   });
-
   return (
     <>
       <li>
@@ -52,10 +51,9 @@ const TodoView = observer(({ todo }) => {
             type="checkbox"
             id={todo.title}
             defaultChecked={todo.finished}
-            // onChange={todoList.todo.toggle}
-            onChange={() => {
-              store.toggle(todo.id);
-            }}
+            onChange={action(() => {
+              todoList.toggle(todo.id);
+            })}
           />
           {todo.title}
         </label>
@@ -75,22 +73,18 @@ const TodoListView = observer(({ todoList }) => {
   );
 });
 
-const TodosCount = observer(() => {
-  return <h3>Mobx: UnFinished todos count: {store.unfinished}</h3>;
+const TodosCount = observer(({ todoList }) => {
+  return <h3>Mobx: UnFinished todos count: {todoList.unfinished}</h3>;
 });
 
-// observer(function TodosCount() {
-//   return <h3>Mobx: UnFinished todos count: {list.unfinished}</h3>;
-// });
-
-const AppV1Mobx = observer(() => {
+const AppV1Mobx = () => {
   return (
     <>
-      <TodosCount />
-      <NewTodo />
-      <TodoListView todoList={store} /> {/* count={list.unfinished} */}
+      <TodosCount todoList={store} />
+      <NewTodo todoList={store} />
+      <TodoListView todoList={store} />
     </>
   );
-});
+};
 
 export default AppV1Mobx;

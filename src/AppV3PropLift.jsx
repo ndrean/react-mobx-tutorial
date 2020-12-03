@@ -85,9 +85,7 @@ const AppV3PropLift = () => {
   }
 
   function addTodo(todo) {
-    setTodos((previous) => {
-      return [...previous, todo];
-    });
+    setTodos((previous) => [...previous, todo]);
   }
 
   return (
