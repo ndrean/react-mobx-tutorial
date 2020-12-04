@@ -60,7 +60,7 @@ function NewTodo({ onhandleAddTodo }) {
 }
 
 function TodosCount({ count }) {
-  return <h3>Prop lifting: UnFinished todos count: {count}</h3>;
+  return <h3>State lift: UnFinished todos count: {count}</h3>;
 }
 
 const AppV3PropLift = () => {
@@ -89,13 +89,14 @@ const AppV3PropLift = () => {
   }
 
   return (
-    <div>
+    <div style={{ display: "inline-block", padding: "5px", minWidth: "400px" }}>
       <TodosCount count={count} />
       <TodoListView
         todoList={todos}
         handleToggle={toggle}
         handleAddTodo={addTodo}
       />
+
     </div>
   );
 };

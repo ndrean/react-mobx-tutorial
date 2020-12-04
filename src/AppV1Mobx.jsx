@@ -79,11 +79,13 @@ const TodosCount = observer(({ todoList }) => {
 
 const AppV1Mobx = () => {
   return (
-    <>
+    <div
+      style={{ display: "inline-block", padding: "10px", minWidth: "400px" }}
+    >
       <TodosCount todoList={store} />
       <NewTodo todoList={store} />
       <TodoListView todoList={store} />
-    </>
+    </div>
   );
 };
 
