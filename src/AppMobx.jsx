@@ -14,7 +14,7 @@ configure({
   disableErrorBoundaries: true,
 });
 
-const NewTodo = ({ todoList }) => {
+const MNewTodo = ({ todoList }) => {
   const [newTitle, setNewTitle] = React.useState("");
   return (
     <form
@@ -38,7 +38,7 @@ const NewTodo = ({ todoList }) => {
   );
 };
 
-const TodoView = observer(({ todoList, todo }) => {
+const MTodoView = observer(({ todoList, todo }) => {
   const mystyle = clsx({
     ischecked: todo.finished,
     notchecked: !todo.finished,
@@ -62,31 +62,32 @@ const TodoView = observer(({ todoList, todo }) => {
   );
 });
 
-const TodoListView = observer(({ todoList }) => {
+const MTodoListView = observer(({ todoList }) => {
   return (
     <ul>
       {todoList.todos &&
         todoList.todos.map((todo) => (
-          <TodoView todo={todo} key={todo.id} todoList={todoList} />
+          <MTodoView todo={todo} key={todo.id} todoList={todoList} />
         ))}
     </ul>
   );
 });
 
-const TodosCount = observer(({ todoList }) => {
+const MTodosCount = observer(({ todoList }) => {
   return <h3>Mobx: UnFinished todos count: {todoList.unfinished}</h3>;
 });
 
-const AppV1Mobx = () => {
+// just passing the store through, not using the values to render, so no `observer`
+const AppMobx = () => {
   return (
     <div
       style={{ display: "inline-block", padding: "10px", minWidth: "400px" }}
     >
-      <TodosCount todoList={store} />
-      <NewTodo todoList={store} />
-      <TodoListView todoList={store} />
+      <MTodosCount todoList={store} />
+      <MNewTodo todoList={store} />
+      <MTodoListView todoList={store} />
     </div>
   );
 };
 
-export default AppV1Mobx;
+export default AppMobx;

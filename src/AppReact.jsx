@@ -3,7 +3,7 @@ import clsx from "clsx";
 import "./index.css";
 import initList from "./pl-store.js";
 
-const TodoView = ({ todo, onhandleToggle }) => {
+const RTodoView = ({ todo, onhandleToggle }) => {
   const mystyle = clsx({
     ischecked: todo.finished,
     notchecked: !todo.finished,
@@ -23,22 +23,25 @@ const TodoView = ({ todo, onhandleToggle }) => {
   );
 };
 
-const TodoListView = ({ todoList, handleToggle, handleAddTodo }) => {
+const RTodoListView = ({ todoList, handleToggle, handleAddTodo }) => {
   return (
     <div>
-      <NewTodo onhandleAddTodo={handleAddTodo} />
+      <RNewTodo onhandleAddTodo={handleAddTodo} />
       <ul>
         {todoList &&
           todoList.map((todo) => (
-            <TodoView todo={todo} key={todo.id} onhandleToggle={handleToggle} />
+            <RTodoView
+              todo={todo}
+              key={todo.id}
+              onhandleToggle={handleToggle}
+            />
           ))}
       </ul>
       {/* <h5>UnFinished todos count: {count}</h5> */}
     </div>
   );
 };
-
-function NewTodo({ onhandleAddTodo }) {
+function RNewTodo({ onhandleAddTodo }) {
   const [newElt, setNewElt] = React.useState("");
   console.log(newElt);
   return (
@@ -59,11 +62,11 @@ function NewTodo({ onhandleAddTodo }) {
   );
 }
 
-function TodosCount({ count }) {
+const RTodosCount = ({ count }) => {
   return <h3>State lift: UnFinished todos count: {count}</h3>;
-}
+};
 
-const AppV3PropLift = () => {
+const AppReact = React.memo(() => {
   const [todos, setTodos] = React.useState(initList);
   const [count, setCount] = React.useState(0);
 
@@ -90,15 +93,14 @@ const AppV3PropLift = () => {
 
   return (
     <div style={{ display: "inline-block", padding: "5px", minWidth: "400px" }}>
-      <TodosCount count={count} />
-      <TodoListView
+      <RTodosCount count={count} />
+      <RTodoListView
         todoList={todos}
         handleToggle={toggle}
         handleAddTodo={addTodo}
       />
-
     </div>
   );
-};
+});
 
-export default AppV3PropLift;
+export default AppReact;
