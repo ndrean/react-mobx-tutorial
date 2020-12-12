@@ -76,16 +76,21 @@ const AppReact = React.memo(() => {
 
   function toggle(id) {
     setTodos((previous) => {
-      const foundId = previous.findIndex((todo) => todo.id === id);
-      const todoAtFoundId = previous[foundId];
-      const newTodos = [...previous];
-      newTodos[foundId] = {
-        ...todoAtFoundId,
-        finished: !todoAtFoundId.finished,
-      };
-      return newTodos;
+      return previous.map((todo) => {
+        if (todo.id === id) return { ...todo, finished: !todo.finished };
+        return todo;
+      });
     });
   }
+
+  // const foundId = previous.findIndex((todo) => todo.id === id);
+  // const todoAtFoundId = previous[foundId];
+  // const newTodos = [...previous];
+  // newTodos[foundId] = {
+  //   ...todoAtFoundId,
+  //   finished: !todoAtFoundId.finished,
+  // };
+  // return newTodos;
 
   function addTodo(todo) {
     setTodos((previous) => [...previous, todo]);
