@@ -23,10 +23,9 @@ const RTodoView = ({ todo, onhandleToggle }) => {
   );
 };
 
-const RTodoListView = ({ todoList, handleToggle, handleAddTodo }) => {
+const RTodoListView = ({ todoList, handleToggle }) => {
   return (
     <div>
-      <RNewTodo onhandleAddTodo={handleAddTodo} />
       <ul>
         {todoList &&
           todoList.map((todo) => (
@@ -43,7 +42,6 @@ const RTodoListView = ({ todoList, handleToggle, handleAddTodo }) => {
 };
 function RNewTodo({ onhandleAddTodo }) {
   const [newElt, setNewElt] = React.useState("");
-  console.log(newElt);
   return (
     <form
       onSubmit={(e) => {
@@ -99,11 +97,8 @@ const AppReact = React.memo(() => {
   return (
     <div style={{ display: "inline-block", padding: "5px", minWidth: "400px" }}>
       <RTodosCount count={count} />
-      <RTodoListView
-        todoList={todos}
-        handleToggle={toggle}
-        handleAddTodo={addTodo}
-      />
+      <RNewTodo onhandleAddTodo={addTodo} />
+      <RTodoListView todoList={todos} handleToggle={toggle} />
     </div>
   );
 });
